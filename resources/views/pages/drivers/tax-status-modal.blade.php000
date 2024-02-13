@@ -1,0 +1,38 @@
+<div class="modal fade" id="tax_status_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Change Tax Status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+
+            <form action="{{ route('change-tax-status') }}" id="changeTaxStatus" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+            @csrf
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="tax_status" class="control-label">Tax Status</label>
+                        <select name="tax_status" id="tax_status" class="custom-select" required>
+                            <option value="">--Tax Status--</option>
+                            <option value="on_trip">On Trip</option>
+                            <option value="available">Available</option>
+                            <option value="leave">Leave</option>
+                            <option value="suspend">Suspend</option>
+                            <option value="banned">Banned</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                </div><!-- Modal Body -->
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <input type="hidden" name="tax_id" />
+                    <button type="submit" class="btn btn-dark"><i class="fa fa-check"></i> Change Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

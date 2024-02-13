@@ -1,0 +1,28 @@
+<div class="modal fade" id="vehicleTypeModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Vehicle Types</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+            </div><!-- Modal Body -->
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="input-group">
+                    <input type="text" name="vehicle_type" id="vehicle_type" placeholder="Vehicle Type" class="form-control" required="required" autocomplete="off" />
+                    <div class="input-group-append">
+                        <span class="input-group-btn">
+                            <button type="submit" id="create_vehicle_type" class="btn btn-success float-right"><i class="fa fa-plus" aria-hidden="true"></i> Add Vehicle Type</button>
+                        </span>
+                    </div>
+                </div>
+            </div><!-- Modal footer -->
+        </div>
+    </div>
+</div>

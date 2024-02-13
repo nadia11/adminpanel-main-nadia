@@ -1,0 +1,91 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,700);
+#wrapper {
+    background: #20242b;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+}
+.real-boxs {
+    bottom: 0;
+    left: 0;
+    padding: 50px;
+    position: absolute;
+    right: 0;
+    top: 5%;
+    color: #6f7b8a;
+}
+.real-boxs .form-control,
+.real-boxs .btn {
+    border: 1px solid transparent;
+    border-radius: 0;
+    margin: 0;
+}
+.real-search {
+    background-color: #FFF;
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    position: absolute;
+    left: 50%;
+    margin-left: -300px;
+    top: 50px;
+    width: 600px;
+    z-index: 2;
+}
+i.fa-search{
+    position: absolute;
+    left: 3%;
+    top: 30%;
+    z-index: 99999;
+}
+.align-lg-center {
+    text-align: center;
+}
+.error-template {
+    padding: 80px 15px;
+}
+.error-template h1 {
+    font-family: "Ubuntu";
+    font-size: 3.5em;
+    font-weight: 300;
+    line-height: 55px;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+}
+strong {
+    font-weight: 700;
+}
+.error-details {
+    padding: 10px 0;
+}
+.error-actions {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.btn-theme-inverse {
+    color: white;
+    background-color: #0aa699;
+    border-color: #0aa699;
+}
+.btn {
+    outline: 0;
+    border-radius: 2px;
+    font-weight: 300;
+    margin-bottom: 3px;
+    -webkit-transition: all 0.25s;
+    -moz-transition: all 0.25s;
+    -o-transform: all 0.25s;
+    -ms-transform: all 0.25s;
+    transition: all 0.25s;
+}
+.btn:hover {
+    color: #fff;
+    filter: invert(100%);
+}
+.btn-theme {
+    color: white;
+    background-color: #f35958;
+    border-color: #f35958;
+}

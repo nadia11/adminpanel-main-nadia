@@ -1,0 +1,131 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use DB;
+use Illuminate\Support\Facades\Auth;
+
+
+class SmsController extends Controller
+{
+
+    private $SMS_SENDER = "8801847169884";
+    private $RESPONSE_TYPE = 'json';
+    private $SMS_USERNAME = 'R6000456';
+    private $SMS_PASSWORD = 'UaKdKKE2gp';
+
+    public function sms_list() {
+        $sms_info = DB::table('sms')->join('users', 'sms.user_id', '=', 'users.id')->select('sms.*', 'users.name as user_name')->get();
+        $manage_sms = view('emails.sms-list')->with('sms_info', $sms_info);
+
+        return view('dashboard')->with('main_content', $manage_sms);
+    }
+
+    public function send_sms(Request $request)
+    {
+        $phone_number = $request->input('phone_number');
+        $message_body = $request->input('message_body');
+        //$message = "A message has been sent to you";
+
+        $a = $this->initiateSmsActivation($phone_number, $message_body);
+        //$this->initiateSmsGuzzle($phone_number, $message);
+
+        /***************** Save sent Message to Database *********************/
+        //if ( $request->ajax() ) {
+            //        $validatedData = $request->validate([
+            //            'title' => 'required|unique:posts|max:255',
+            //            'body' => 'required',
+            //        ]);
+
+            $data = array(
+                'sender'       => "",
+                'receiver'     => $request->phone_number,
+                'sms_date'     => date('Y-m-d H:i:s'),
+                'subject'      => $request->subject,
+                'message_body' => $request->message_body,
+                'sms_type'     => "",
+                'user_id'      => Auth::id(),
+                'created_at'   => date('Y-m-d H:i:s'),
+            );
+            DB::table('sms')->insert( $data );
+            //return response()->json(['success' => 'Message has been sent successfully!', 'status' => 'success']);
+//        }
+//        return response(['error' => 'Failed saving the sms', 'status' => 'failed']);
+        return redirect()->back()->with('message', 'Message has been sent successfully');
+    }
+
+    public function initiateSmsActivation($phone_number, $message){
+        $isError = 0;
+        $errorMessage = true;
+
+        //Preparing post parameters
+        $postData = array(
+            'username' => $this->SMS_USERNAME,
+            'password' => $this->SMS_PASSWORD,
+            'message' => $message,
+            'sender' => $this->SMS_SENDER,
+            'mobiles' => $phone_number,
+            'response' => $this->RESPONSE_TYPE
+        );
+
+        $url = 'http://bulk.fmsms.biz/smsapi?api_key=R60004565c77db2db2b387.92360546&type='.$this->RESPONSE_TYPE.'&contacts='.$phone_number.'&senderid='.$this->SMS_SENDER.'&msg='.$message;
+        //$url = "http://portal.bulksmsnigeria.net/api/";
+        //Reference: https://www.php.net/manual/en/book.curl.php   &&& http://docs.guzzlephp.org/en/stable/
+
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, $this->SMS_USERNAME . ":" . $this->SMS_PASSWORD);
+
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $postData);
+        //curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //Ignore SSL certificate verification
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        /*
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $postData
+        ));
+        */
+
+
+        //get response
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $responseBody = json_decode($response);
+        echo $responseBody;
+        //Print error if any
+        if (curl_errno($ch)) { $isError = true; $errorMessage = curl_error($ch); }
+        if($isError){ return array('error' => 1 , 'message' => $errorMessage); }else{ return array('error' => 0, 'ss'=>$response ); }
+
+        curl_close($ch);
+    }
+
+    public function initiateSmsGuzzle($phone_number, $message)
+    {
+        $client = new Client();
+
+        //$response = $client->post('http://portal.bulksmsnigeria.net/api/?', [
+        $response = $client->post('http://bulk.fmsms.biz/smsapi?api_key=' . "R60004565c77db2db2b387.92360546", [
+            'verify'    =>  false,
+            'form_params' => [
+                'username' => $this->SMS_USERNAME,
+                'password' => $this->SMS_PASSWORD,
+                'message' => $message,
+                'sender' => $this->SMS_SENDER,
+                'mobiles' => $phone_number,
+            ],
+        ]);
+        $response = json_decode($response->getBody(), true);
+    }
+}

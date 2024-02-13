@@ -1,0 +1,186 @@
+
+<h2 class="form-section-title">Address Information</h2>
+<div class="form-group">
+    <h6>Present Address</h6>
+    <div class="marB5">
+        <label for="division_id" class="control-label">Division:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <button type="button" class="btn btn-info"><i class="fa fa-th-large"></i></button>
+            </div>
+
+            <select id="division_id" name="division_id" class="custom-select" tabindex="21">
+                <option value="" selected="selected">--Select Division--</option>
+                @php $divisions = DB::table('divisions')->orderBy('division_name', 'ASC')->pluck("division_name", "division_id") @endphp
+
+                @foreach( $divisions as $key => $division )
+                <option value="{{ $key }}">{{ $division }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="district_id" class="control-label">District</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="district_id" name="district_id" class="custom-select" tabindex="22">
+                <option value="">--Select District--</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="thana_id" class="control-label">{{ __('Thana:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="thana_id" name="thana_id" class="custom-select" tabindex="23">
+                <option value="">{{ __('select Thana') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="post_office_id" class="control-label">{{ __('Post Office:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="post_office_id" name="post_office_id" class="custom-select" tabindex="24">
+                <option value="">{{ __('select Post Office') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="post_code_id" class="control-label">{{ __('Post Code:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="post_code_id" name="post_code_id" class="custom-select" tabindex="25">
+                <option value="">{{ __('select Post Code') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="section_no" class="control-label">{{ __('Section/Block:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th-large"></i></div>
+            </div>
+            <input type="text" name="section_no" id="section_no" placeholder="Section No." class="form-control" tabindex="26" />
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="road_no" class="control-label">{{ __('Road:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-road"></i></div>
+            </div>
+            <input type="text" name="road_no" id="road_no" placeholder="Road No." class="form-control" tabindex="27" />
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="house_no" class="control-label">{{ __('House:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-home"></i></div>
+            </div>
+            <input type="text" name="house_no" id="house_no" placeholder="House No." class="form-control" tabindex="28" />
+        </div>
+    </div>
+</div><!-- col-md-6 -->
+
+
+<div class="form-group">
+    <h6 style="white-space: nowrap;">Permanent Address <div class="form-check-inline"><label class="form-check-label" style="font-size: 9px; font-weight: normal;"><input type="checkbox" class="form-check-input" value="" style="position: static; opacity: 1; vertical-align: middle;" id="employee_has_same">{{ __('Same as Present') }}</label></div> </h6>
+    <div class="marB5">
+        <label for="division_id" class="control-label">Division:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <button type="button" class="btn btn-info"><i class="fa fa-th-large"></i></button>
+            </div>
+
+            <select id="division_id" name="division_id" class="custom-select" tabindex="29">
+                <option value="" selected="selected">{{ __('Select Division') }}</option>
+                <?php $divisions = DB::table('divisions')->orderBy('division_name', 'ASC')->pluck("division_name", "division_id"); ?>
+
+                @foreach( $divisions as $key => $division )
+                <option value="{{ $key }}">{{ $division }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="district_id" class="control-label">{{ __('District:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="district_id" name="district_id" class="custom-select" tabindex="30">
+                <option value="">{{ __('select District') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="thana_id" class="control-label">{{ __('Thana:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="thana_id" name="thana_id" class="custom-select" tabindex="31">
+                <option value="">{{ __('select Thana') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="post_office_id" class="control-label">{{ __('Post Office:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="post_office_id" name="post_office_id" class="custom-select" tabindex="32">
+                <option value="">{{ __('select Post Office') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="post_code_id" class="control-label">{{ __('Post Code:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th"></i></div>
+            </div>
+            <select id="post_code_id" name="post_code_id" class="custom-select" tabindex="33">
+                <option value="">{{ __('select Post Code') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="section_no" class="control-label">{{ __('Section/Block:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-th-large"></i></div>
+            </div>
+            <input type="text" name="section_no" id="section_no" placeholder="Section" class="form-control" tabindex="34" />
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="road_no" class="control-label">{{ __('Road:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-road"></i></div>
+            </div>
+            <input type="text" name="road_no" id="road_no" placeholder="Road No."  class="form-control" tabindex="35" />
+        </div>
+    </div>
+    <div class="marB5">
+        <label for="house_no" class="control-label">{{ __('House:') }}</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-home"></i></div>
+            </div>
+            <input type="text" name="house_no" id="house_no" placeholder="House No." class="form-control" tabindex="36" />
+        </div>
+    </div>
+</div>

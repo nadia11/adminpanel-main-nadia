@@ -1,0 +1,97 @@
+@media print {
+    body, html{
+        /*font-size: 14px;*/
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 210mm;
+        height: 297mm;
+    }
+    @page{
+        size: A4;
+        margin: 5mm 7mm 0mm 7mm;
+    }
+    /*thead { display: table-header-group; }*/
+    /*tfoot{ display: table-footer-group; }*/
+
+    /*p.page-break { page-break-after: always; }*/
+    @bottom-right { content: counter(page) " of " counter(pages); }
+    .wrapper{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .letter-head-pad-header{
+        margin: 0 auto 80px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 88%;
+    }
+    .letter-head-pad-footer{
+        margin: 0 auto 15px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 88%;
+    }
+    .letter-head-pad-footer:after { content: counter(page); }
+
+    .print-page h4.page-title{
+        font-size: 30px; text-align: center; font-weight: bold; text-transform: uppercase; margin-top: 150px;
+    }
+
+}
+
+body, html{
+    font-size: 13px;
+    padding: 30px 100px;
+    background: #2B2B2B;
+}
+.wrapper{
+    padding: 30px;
+    background: #fff;
+}
+.table-title{
+    border-bottom: 1px solid #2da5da;
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
+    color: #2da5da;
+    text-transform: uppercase;
+    font-weight: 500;
+    width: 100%;
+    margin: 100px auto 10px;
+}
+.print-page .well {
+    margin-top: 20px;
+    position: relative;
+    min-height: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+.profile-img-wrapper {
+    overflow: hidden;
+}
+.print-page .well .title {
+    position: absolute;
+    right: 0;
+    top: 40%;
+    margin-right: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #c0392b;
+}
+.print-page .well img {
+    width: 125px;
+    height: 150px;
+    float: left;
+}

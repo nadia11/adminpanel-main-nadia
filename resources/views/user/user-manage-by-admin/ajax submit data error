@@ -1,0 +1,46 @@
+
+<script>
+    $("#createForm").submit(function (event) {
+        $("#btn_save").attr('disabled', 'disabled').html("<i class='glyphicon glyphicon-floppy-disk'></i> Saving...");
+        event.preventDefault();
+        var form = $(this);
+        var data = form.serialize();
+        var url = form.attr("action");
+        
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            cache: false,
+            success: function (data) {
+                if (data.fail) {
+                    $('input.required, textarea.required').each(function () {
+                        index = $(this).attr('name');
+                        if (index in data.errors) {
+                            $("#form-" + index + "-error").addClass("has-error");
+                            $("#" + index + "-error").html(data.errors[index]);
+                        }
+                        else {
+                            $("#form-" + index + "-error").removeClass("has-error");
+                            $("#" + index + "-error").empty();
+                        }
+                    });
+                } else {
+                    $(".has-error").removeClass("has-error");
+                    $(".help-block").empty();
+                    var url = window.location.href;
+                    var controllerAction = url.substr(url.indexOf('#') + 1);
+                    ajaxLoad(controllerAction);
+                }
+                $("#focus").focus();
+                $("#btn_save").removeAttr('disabled').html("<i class='glyphicon glyphicon-floppy-disk'></i> Save");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
+        return false;
+    });
+</script>
+
+@endsection

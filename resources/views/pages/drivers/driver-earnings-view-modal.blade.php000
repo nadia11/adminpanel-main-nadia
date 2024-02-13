@@ -1,0 +1,110 @@
+<div class="modal fade" id="view_driver_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-extra-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 20%;">Client Name</th>
+                        <td style="width: 3%;">:</td>
+                        <td class="client_name"></td>
+                    </tr>
+                    <tr>
+                        <th>Driver Earnings Number</th>
+                        <td>:</td>
+                        <td class="driver_number"><var></var><div class="float-right attachment-btn"><a href="" class="btn btn-sm downloadPoAttachment" download> <i class="fa fa-cloud-download-alt"></i> Download Driver Earnings Copy</a></div></td>
+                    </tr>
+                    <tr>
+                        <th>Driver Earnings Date</th>
+                        <td>:</td>
+                        <td class="driver_date"></td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Date</th>
+                        <td>:</td>
+                        <td class="job_date"></td>
+                    </tr>
+                    <tr>
+                        <th>Project Name</th>
+                        <td>:</td>
+                        <td class="project_name"></td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>:</td>
+                        <td class="description"></td>
+                    </tr>
+                    <tr>
+                        <th>Job Status</th>
+                        <td>:</td>
+                        <td class="job_status"></td>
+                    </tr>
+                    <tr>
+                        <th>Driver Earnings Status</th>
+                        <td>:</td>
+                        <td class="driver_status text-capitalize"></td>
+                    </tr>
+                    <tr>
+                        <th>Client Manager Name</th>
+                        <td>:</td>
+                        <td class="employee_name text-capitalize"></td>
+                    </tr>
+                    <tr>
+                        <th>Designation</th>
+                        <td>:</td>
+                        <td class="employee_designation text-capitalize"></td>
+                    </tr>
+                    <tr>
+                        <th>Mobile</th>
+                        <td>:</td>
+                        <td class="employee_mobile text-capitalize"></td>
+                    </tr>
+                    <tr>
+                        <th>Driver Earnings Note</th>
+                        <td>:</td>
+                        <td class="driver_note"></td>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered table-sm driver_item_table text-center">
+                    <caption>Driver Earnings Items</caption>
+                    <thead class="thead-light">
+                        <tr>
+                            <th>#</th>
+                            <th style="width: 45%;">Product Name</th>
+                            <th style="width: 10%;">Qty.</th>
+                            <th style="width: 10%;">UOM</th>
+                            <th style="width: 12%;">Unit Price</th>
+                            <th style="width: 20%;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="driver_item_wrapper">
+                        <tr id="row1">
+                            <td style="vertical-align: middle;"></td>
+                            <td class="driveri_product_name"></td>
+                            <td class="driveri_qty"></td>
+                            <td class="driveri_uom"></td>
+                            <td class="driveri_unit_price"></td>
+                            <td class="driveri_total"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="text-bold text-right"><td colspan="5">Sub Total </td><td colspan="2" class="driver_sub_total"></td></tr>
+                        <tr class="text-right"><td colspan="5">VAT(%) </td><td colspan="2" class="driver_vat_percent"></td></tr>
+                        <tr class="text-right"><td colspan="5">VAT Amount </td><td colspan="2" class="driver_vat_amount"></td></tr>
+                        <tr class="text-bold text-right"><td colspan="5">Grand Total (BDT) </td><td colspan="2" class="driver_amount"></td></tr>
+                        <tr class="text-right"><td colspan="5">Advance Amount </td><td colspan="2" class="advance_amount"></td></tr>
+                        <tr class="text-right"><td colspan="5">Balance Amount </td><td colspan="2" class="balance_amount"></td></tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
