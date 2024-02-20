@@ -550,6 +550,7 @@ class ApiAndroidDriverController extends Controller
 
     public function assign_driver_to_rider_trip(Request $request)
     {
+        Log::info($request);
         $driver_info = DB::table('drivers')->where('email', $request->email)->select('driver_id', 'driver_name', 'mobile')->first();
         $vehicles = DB::table('vehicles')->where('driver_id', $driver_info->driver_id)->select('vehicle_id', 'vehicle_type_id', 'vehicle_reg_number')->first();
         $trip_data = DB::table('rider_trips')->where('trip_number', $request->trip_number)->first();
@@ -574,6 +575,8 @@ class ApiAndroidDriverController extends Controller
                 'distance' => $trip_data->distance,
                 'fare' => $trip_data->fare,
                 'payment_method' => $trip_data->payment_method,
+                'payment_amount' => $trip_data->payment_amount,
+                'payment_status' => $trip_data->payment_status,
                 'origin_lat' => number_format($trip_data->origin_lat, 7),
                 'origin_long' => number_format($trip_data->origin_long, 7),
                 'destination_lat' => number_format($trip_data->destination_lat, 7),
@@ -584,6 +587,12 @@ class ApiAndroidDriverController extends Controller
                 'vehicle_id' => $vehicles->vehicle_id,
                 'vehicle_type_id' => $vehicles->vehicle_type_id,
                 'created_at' => date('Y-m-d H:i:s'),
+                'destination_change_fee' => $trip_data->destination_change_fee,
+                'delay_cancellation_minute' => $trip_data->delay_cancellation_minute,
+                'delay_cancellation_fee' => $trip_data->delay_cancellation_fee,
+                'cancelled_by' => $trip_data->cancelled_by,
+                'reason_for_cancellation' => $trip_data->reason_for_cancellation,
+                'cancellation_time' => $trip_data->cancellation_time,
             )
         );
 
