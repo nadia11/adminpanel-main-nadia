@@ -35,6 +35,8 @@ Route::middleware('auth:api')->group(function () {
 Route::prefix('android/rider')->group(function () {
     Route::post('login', 'ApiAndroidRiderController@login');
     Route::post('send-sms', 'SmsController@nexmoSms');
+    Route::post('verify-otp', 'SmsController@verify_otp');
+    Route::post('resend-otp', 'SmsController@resend_otp');
     Route::post('login-by-mobile', 'ApiAndroidRiderController@login_by_mobile');
     Route::post('login-by-email', 'ApiAndroidRiderController@login_by_email');
     Route::post('registration-by-mobile', 'ApiAndroidRiderController@registration_by_mobile');

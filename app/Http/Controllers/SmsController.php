@@ -372,37 +372,137 @@ class SmsController extends Controller
 
 
         try {
-            //             $curl = curl_init();
+            $curl = curl_init();
 
-            //             curl_setopt_array(
-//                 $curl,
-//                 array(
-//                     CURLOPT_URL => 'https://api.d7networks.com/verify/v1/otp/send-otp',
-//                     CURLOPT_RETURNTRANSFER => true,
-//                     CURLOPT_ENCODING => '',
-//                     CURLOPT_MAXREDIRS => 10,
-//                     CURLOPT_TIMEOUT => 0,
-//                     CURLOPT_FOLLOWLOCATION => true,
-//                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//                     CURLOPT_CUSTOMREQUEST => 'POST',
-//                     CURLOPT_POSTFIELDS => '{
-//     "originator": "SignOTP",
-//     "recipient": "+8801752015791",
-//     "content": "Greetings from D7 API, your mobile verification code is: {}",
-//     "expiry": "600",
-//     "data_coding": "text"
-// }',
-//                     CURLOPT_HTTPHEADER => array(
-//                         'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiZTUwYmFmNTMtZjEwOS00MGVkLWFjMjAtNjBmOWY0NGE5MmQ4In0.-Wbi5IlgGC1GuT817ZLWL7iQ6rkCWp5LVEMttq-Efec',
-//                         'Content-Type: application/json'
-//                     ),
-//                 )
-//             );
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'https://api.d7networks.com/verify/v1/otp/send-otp',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => '{
+    "originator": "SignOTP",
+    "recipient": "+88' . $request->to_number . '",
+    "content": "Greetings from Uder, your mobile verification code is: {}",
+    "expiry": "600",
+    "data_coding": "text"
+}',
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiZTUwYmFmNTMtZjEwOS00MGVkLWFjMjAtNjBmOWY0NGE5MmQ4In0.-Wbi5IlgGC1GuT817ZLWL7iQ6rkCWp5LVEMttq-Efec',
+                        'Content-Type: application/json'
+                    ),
+                )
+            );
 
-            //             $response = curl_exec($curl);
+            $response = curl_exec($curl);
 
-            //             curl_close($curl);
-//             Log::info($response);
+            curl_close($curl);
+            $responseObj = json_decode($response);
+            Log::info($responseObj->otp_id);
+            return response()->json(['otp_id' => $responseObj->otp_id]);
+
+
+        } catch (\Exception $e) {
+            // Log the error
+            $errorMessage = 'An error occurred while sending SMS: ' . $e->getMessage();
+            echo $errorMessage;
+            Log::error('Error sending sms', [
+                'error' => $e->getMessage()
+            ]);
+            // Return a generic error response
+            return response()->json(['error' => $errorMessage], 500);
+        }
+    }
+    public function verify_otp(Request $request)
+    {
+        Log::info($request);
+        try {
+            $curl = curl_init();
+
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'https://api.d7networks.com/verify/v1/otp/verify-otp',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => '{
+                    "otp_id": "' . $request->otp_id . '",
+                     "otp_code": "' . $request->otp_code . '"
+                    }',
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiZTUwYmFmNTMtZjEwOS00MGVkLWFjMjAtNjBmOWY0NGE5MmQ4In0.-Wbi5IlgGC1GuT817ZLWL7iQ6rkCWp5LVEMttq-Efec',
+                        'Content-Type: application/json'
+                    ),
+                )
+            );
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            $responseObj = json_decode($response);
+            Log::info($response);
+            return response()->json(['status' => $responseObj->status]);
+
+
+        } catch (\Exception $e) {
+            // Log the error
+            $errorMessage = 'An error occurred while verifying otp: ' . $e->getMessage();
+            echo $errorMessage;
+            Log::error('Error verifying otp', [
+                'error' => $e->getMessage()
+            ]);
+            // Return a generic error response
+            return response()->json(['error' => $errorMessage], 500);
+        }
+    }
+    public function resend_otp(Request $request)
+    {
+        Log::info($request);
+
+
+        try {
+            $curl = curl_init();
+
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'https://api.d7networks.com/verify/v1/otp/resend-otp',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => '{
+                    "otp_id": "' . $request->otp_id . '"
+                    }',
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiZTUwYmFmNTMtZjEwOS00MGVkLWFjMjAtNjBmOWY0NGE5MmQ4In0.-Wbi5IlgGC1GuT817ZLWL7iQ6rkCWp5LVEMttq-Efec',
+                        'Content-Type: application/json'
+                    ),
+                )
+            );
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            Log::info($response);
+            // $responses = json_decode($response);
+            //Log::info($responses->otp_id);
+            //return response()->json(['otp_id' => $responses->otp_id]);
+
+
         } catch (\Exception $e) {
             // Log the error
             $errorMessage = 'An error occurred while sending SMS: ' . $e->getMessage();
