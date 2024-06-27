@@ -691,14 +691,33 @@ class ApiAndroidRiderController extends Controller
         );
     }
 
+    // public function rider_transactions($rider_mobile)
+    // {
+    //     $driver_id = DB::table('drivers')->where('mobile', $rider_mobile)->value('driver_id');
+
+    //     $todays_earnings = DB::table('driver_earnings')
+    //         ->where('driver_id', $driver_id)
+    //         ->where('created_at', '>=', Carbon::now()->subMonth(3)->toDateString())
+    //         ->select('driver_earning_id AS transaction_id', 'driver_id', DB::raw("DATE_FORMAT(created_at, '%M %d %Y, %h:%i %p') as transaction_date"), 'total_earnings', 'trip_number', 'payment_status')
+    //         ->orderBy('created_at', 'DESC')
+    //         ->get();
+
+    //     return response()->json(
+    //         array(
+    //             'message' => $todays_earnings,
+    //             'total_record' => count($todays_earnings),
+    //             'code' => 200,
+    //         )
+    //     );
+    // }
     public function rider_transactions($rider_mobile)
     {
-        $driver_id = DB::table('drivers')->where('mobile', $rider_mobile)->value('driver_id');
+        $rider_id = DB::table('riders')->where('mobile', $rider_mobile)->value('rider_id');
 
-        $todays_earnings = DB::table('driver_earnings')
-            ->where('driver_id', $driver_id)
+        $todays_earnings = DB::table('rider_trips')
+            ->where('rider_id', $rider_id)
             ->where('created_at', '>=', Carbon::now()->subMonth(3)->toDateString())
-            ->select('driver_earning_id AS transaction_id', 'driver_id', DB::raw("DATE_FORMAT(created_at, '%M %d %Y, %h:%i %p') as transaction_date"), 'total_earnings', 'trip_number', 'payment_status')
+            ->select('rider_trip_id AS transaction_id', 'rider_id', DB::raw("DATE_FORMAT(created_at, '%M %d %Y, %h:%i %p') as transaction_date"), 'payment_amount', 'trip_number', 'payment_status')
             ->orderBy('created_at', 'DESC')
             ->get();
 
@@ -710,7 +729,6 @@ class ApiAndroidRiderController extends Controller
             )
         );
     }
-
     public function add_news_view_count(Request $request)
     {
         DB::table('event_and_news')->where('news_id', $request->news_id)->increment('view_count', 1);

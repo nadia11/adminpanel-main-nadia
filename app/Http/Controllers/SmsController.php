@@ -368,7 +368,7 @@ class SmsController extends Controller
 
     public function nexmoSms(Request $request)
     {
-        Log::info($request);
+
 
 
         try {

@@ -61,9 +61,11 @@ class ApiAndroidDriverController extends Controller
                         'code' => 200,
                         'user_id' => $driver->driver_id,
                         'user_name' => $driver->driver_name,
-                        'user_email' => $driver->email,
-                        'user_mobile' => $request->mobile, /*** from request ***/
-                        'user_image' => isset($drivers->driver_photo) ? url("/storage/driver-photo/" . $driver->driver_photo) : image_url('defaultAvatar.jpg'),
+                        'user_email' => $driver->email, /*** from request ***/
+                        'user_mobile' => $driver->mobile,
+                        'user_image' => isset($driver->driver_photo) ? url("/storage/driver-photo/" . $driver->driver_photo) : image_url('defaultAvatar.jpg'),
+                        'driver_status' => $driver->driver_status,
+                        'profile_status' => $driver->profile_status
                     )
                 );
             }
@@ -395,7 +397,7 @@ class ApiAndroidDriverController extends Controller
     public function update_profile_form(Request $request)
     {
         $max_id = DB::table('drivers')->where('mobile', $request->mobile)->value('driver_id');
-
+        Log::info($max_id);
         $data = array(
             'driver_name' => $request->user_name,
             'date_of_birth' => $request->date_of_birth ? Carbon::createFromFormat('d/m/Y', $request->date_of_birth)->format('Y-m-d H:i:s') : "",
@@ -403,21 +405,22 @@ class ApiAndroidDriverController extends Controller
             'gender' => $request->gender,
             'updated_at' => date('Y-m-d H:i:s'),
         );
-
-        //your base64 encoded
+        Log::info($request->file_name);
+        //your base64 encoded   
         if ($request->file_name !== 'no_image') {
             $image = $request->user_image;
             $image = str_replace('data:image/jpeg;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
             //$imageName = str_random(10).'.'.'jpg';
-
+            Log::info($image);
             $request_file = $request->file_name;
             $info = pathinfo($request_file);
+            Log::info($info);
             //$file_name =  basename($file,'.'.$info['extension']);
             //dd(end(explode('.', $request->file_name)));
             $extension = $info['extension'];
             $file_name = $max_id . "_" . strtolower(slug_to_title($request->user_name)) . "." . $extension;
-
+            Log::info($file_name);
             //Storage::put('public/uploads/driver-photo/'.$file_name, base64_decode($image));
             Storage::disk('local')->put("/public/driver-photo/" . $file_name, base64_decode($image));
             $data['driver_photo'] = $file_name;
